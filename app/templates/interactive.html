@@ -2,6 +2,10 @@
   <title>Interactive Chanda Test</title>
   <head>
     <script>
+      function fill_sample() {
+	  document.getElementById('kabita-maintext').value = "# शार्दुलविक्रीडित-छन्द-कविता\n# SSSIISISIIISSSISSIS \n\nहोस् दीर्घायु सुस्वास्थ्य झै मधुरता वाणी मिठो नम्र होस्\nआफ्नो धर्म र कर्म मानमनिता भाषा कला चाख होस्\n\nइच्छा आँट खुशी सबै सफलहोस् तिम्रा सबै चाहना\nयो जन्मोत्सवले सधै खुश भरोस् हाम्रो छ यै कामना\n";
+      }
+      
       function check_kabita() {
 	  data = {text : document.getElementById('kabita-maintext').value}
 	  return fetch("/check", {
@@ -25,6 +29,7 @@
 	<button onclick="window.location.href='/'">Back</button>
 	<button>Upload File</button>
 	<button>Save to File</button>
+	<button onclick="fill_sample()">Example</button>
 	<button onclick="check_kabita()">Check</button>
       </div>
     <div style="width: 50%; height: 100%; float: left">
