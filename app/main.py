@@ -8,7 +8,7 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def main():
-    return 'Goto /check for checking the chanda'
+    return flask.render_template('main.html')
 
 
 @app.route('/check', methods=['POST'])
