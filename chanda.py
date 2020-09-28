@@ -1,8 +1,10 @@
-from enum import Enum
 import re
+from enum import Enum
+
 
 CHANDA_STR = "यमाता राजभान सलगं"
 SEPERATOR_CHARS = " -,;१२३४५६७८९०'\""
+
 
 class Swor(Enum):
     LONG = 'S'
@@ -25,8 +27,8 @@ class Chars(Enum):
 
 def categorize(char):
     chars = [
-        SEPERATOR_CHARS, "कखगघङ चछजझञ टठडढण तथदधन पफबभम यरलव शषस ह", "अइउऋ", "आईएऐओऔऊ",
-        "ाीेैोौूंः:!।", "िुँ", "्"
+        SEPERATOR_CHARS, "कखगघङ चछजझञ टठडढण तथदधन पफबभम यरलव शषस ह", "अइउऋ",
+        "आईएऐओऔऊ", "ाीेैोौूंः:!।", "िुँ", "्"
     ]
     for i, cs in enumerate(chars):
         if char in cs:
@@ -60,10 +62,14 @@ def tokenize(word):
 
 
 def extract_words(line):
-    return re.split('|'.join(SEPERATOR_CHARS),line)
+    return re.split('|'.join(SEPERATOR_CHARS), line)
 
 
-def tokenize_line(line,word_by_word=False):
+def tokenize_line(line, word_by_word=False):
+    line = line.strip()
+    if len(line) == 0 or line[0] == '#':
+        return []
+
     words = extract_words(line)
     token = []
     for word in words:
@@ -76,6 +82,7 @@ def tokenize_line(line,word_by_word=False):
 
 def token_string(token):
     return ''.join([str(t) for t in token])
+
 
 if __name__ == '__main__':
     print("String: ", CHANDA_STR)
