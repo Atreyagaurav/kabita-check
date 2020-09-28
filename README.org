@@ -1,0 +1,29 @@
+* Kabita Checking Webapp
+
+This webapp is hosted on [[https://kabita-check.herokuapp.com/]].
+
+
+** Sample file
+The file can accommodate comments, start the line with '#' to make that line as a comment.
+
+Commented lines are not checked.
+
+The commented line can have the chanda rule in 'I' and 'S' format.
+
+Here is an example:
+
+#+begin_quote
+ # शार्दुलविक्रीडित-छन्द-कविता
+
+ # SSSIISISIIISSSISSIS 
+
+
+होस् दीर्घायु सुस्वास्थ्य झै मधुरता वाणी मिठो नम्र होस्
+
+आफ्नो धर्म र कर्म मानमनिता भाषा कला चाख होस्
+
+
+इच्छा आँट खुशी सबै सफलहोस् तिम्रा सबै चाहना
+
+यो जन्मोत्सवले सधै खुश भरोस् हाम्रो छ यै कामना
+#+end_quote
