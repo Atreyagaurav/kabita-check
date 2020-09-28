@@ -1,6 +1,6 @@
 import flask
 
-import compare
+import app.compare as compare
 
 
 app = flask.Flask(__name__)
@@ -20,7 +20,3 @@ def check():
 @app.route('/kabita_interactive')
 def interactive():
     return flask.render_template('interactive.html')
-
-
-if __name__ == '__main__':
-    app.run()

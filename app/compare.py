@@ -6,7 +6,7 @@ from statistics import mode
 
 from jinja2 import Template
 
-import chanda
+import app.chanda as chanda
 
 
 def iscomment(line):
@@ -68,7 +68,7 @@ def analysis(lines):
 
     html_lines = map(lambda l: render_line(l, chanda_rule), lines)
 
-    with open("templates/comparision.html", 'r') as reader:
+    with open("app/templates/comparision.html", 'r') as reader:
         template = Template(reader.read())
 
     html = template.render(title="", chanda_rule=chanda_rule, lines=html_lines)
