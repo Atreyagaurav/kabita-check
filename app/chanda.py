@@ -1,9 +1,11 @@
 import re
+import json
 from enum import Enum
 
 
 CHANDA_STR = "यमाता राजभान सलगं"
 SEPERATOR_CHARS = " -,;१२३४५६७८९०'\""
+CHANDA_DATA_FILE = 'app/data/standard_names.json'
 
 
 class Swor(Enum):
@@ -82,6 +84,12 @@ def tokenize_line(line, word_by_word=False):
 
 def token_string(token):
     return ''.join([str(t) for t in token])
+
+
+def get_chanda_name(rule):
+    with open(CHANDA_DATA_FILE,'r') as r:
+        names = json.load(r)
+    return names.get(rule,'UNKNOWN')
 
 
 if __name__ == '__main__':
