@@ -26,12 +26,15 @@ def extract_chanda_rule(lines):
                           lines)
     rules = map(lambda l: chanda.token_string(chanda.tokenize_line(l)),
                 kabita_lines)
-    return mode(rules)
+    rule = mode(rules)
+    if len(rule)>0:
+        rule = rule[:-1] + 'S'
+    return rule
 
 
 def check_chanda(line, chanda_rule):
     tokens = chanda.tokenize_line(line)
-    if chanda_rule[-1]=='S' and len(tokens)>0:
+    if len(tokens)>0:
         tokens[-1]=chanda.Swor('S')
     return chanda.token_string(tokens) == chanda_rule
 
@@ -76,7 +79,7 @@ def analysis(lines):
     with open("app/templates/comparision.html", 'r') as reader:
         template = Template(reader.read())
 
-    html = template.render(title="", chanda_rule=chanda_rule, lines=html_lines)
+    html = template.render(title="",chanda_name=chanda.get_chanda_name(chanda_rule), chanda_rule=chanda_rule, lines=html_lines)
     return html
 
 
