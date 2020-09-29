@@ -31,22 +31,27 @@ def extract_chanda_rule(lines):
 
 def check_chanda(line, chanda_rule):
     tokens = chanda.tokenize_line(line)
+    if chanda_rule[-1]=='S' and len(tokens)>0:
+        tokens[-1]=chanda.Swor('S')
     return chanda.token_string(tokens) == chanda_rule
 
 
 def render_line(line, chanda_rule):
+    if iscomment(line):
+        return f'<font color="brown">{line}</font>'
     if check_chanda(line, chanda_rule):
         return f'<font color="green">{line}</font>'
     tokens = chanda.tokenize_line(line, word_by_word=True)
     words = chanda.extract_words(line)
     count = 0
     for w, t in zip(words, tokens):
-        if chanda.token_string(t) != chanda_rule[count:count + len(t)]:
+        rule_is = chanda_rule[count:count + len(t)]
+        here_is = chanda.token_string(t)
+        if here_is != rule_is:
             print(f"Rule Violation on word:{w}")
             line = line.replace(
                 w,
-                f'<font color="red" title="It should be ({chanda_rule[count:count+len(t)]}) here instead of ({chanda.token_string(t)})">{w}</font>',
-                1)
+                f'<font color="red" title="It should be ({rule_is}) here instead of ({here_is})">{w}</font>')
             # multiple same word will break this
         count += len(t)
     return line
