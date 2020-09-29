@@ -2,7 +2,7 @@
 
 import re
 import sys
-from statistics import mode
+from statistics import mode,StatisticsError
 
 from jinja2 import Template
 
@@ -26,7 +26,14 @@ def extract_chanda_rule(lines):
                           lines)
     rules = map(lambda l: chanda.token_string(chanda.tokenize_line(l)),
                 kabita_lines)
-    rule = mode(rules)
+    try:
+        rule = mode(rules)
+    except StatisticsError:
+        #mode couldn't be found: not error on my laptop but shows error on heroku
+        if len(rules)>0:
+            rule = rules[0]
+        else:
+            rule = ''
     if len(rule)>0:
         rule = rule[:-1] + 'S'
     return rule
