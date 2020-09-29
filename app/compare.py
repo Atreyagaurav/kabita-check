@@ -30,10 +30,7 @@ def extract_chanda_rule(lines):
         rule = mode(rules)
     except StatisticsError:
         #mode couldn't be found: not error on my laptop but shows error on heroku
-        if len(rules)>0:
-            rule = rules[0]
-        else:
-            rule = ''
+        rule = ''
     if len(rule)>0:
         rule = rule[:-1] + 'S'
     return rule
