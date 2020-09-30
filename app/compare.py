@@ -44,6 +44,8 @@ def check_chanda(line, chanda_rule):
 
 
 def render_line(line, chanda_rule):
+    if line.strip()=='':
+        return ''
     if iscomment(line):
         return f'<font color="brown">{line}</font>'
     if check_chanda(line, chanda_rule):

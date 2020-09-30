@@ -11,9 +11,17 @@ CHANDA_DATA_FILE = 'app/data/standard_names.json'
 class Swor(Enum):
     LONG = 'S'
     SHORT = 'I'
+    ANY = 'X'
 
     def __str__(self):
         return self.value
+
+    def __equals__(self,other):
+        if self.value == other.value:
+            return True
+        if self is Swor.ANY or other is Swor.ANY:
+            return True
+        return False
 
 
 class Chars(Enum):
@@ -73,12 +81,18 @@ def tokenize_line(line, word_by_word=False):
         return []
 
     words = extract_words(line)
+    if word_by_word:
+        token = tuple(map(tokenize,
+                          words))
+        if len(words)>0 and len(token[-1])>0:
+            token[-1][-1] = Swor('S')
+        return token
+    
     token = []
     for word in words:
-        if word_by_word:
-            token.append(tokenize(word))
-        else:
             token += tokenize(word)
+    if len(token)>0:
+        token[-1] = Swor('S')
     return token
 
 
