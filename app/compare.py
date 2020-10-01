@@ -19,7 +19,7 @@ def extract_chanda_rule(lines):
     comments = filter(iscomment, lines)
     for comment in comments:
         line = comment[1:].strip()
-        if re.match('[IS]+', line):
+        if re.match('[ISX]+', line):
             return ''.join([c for c in line if c in 'IS'])
     #if not specified or find, guess the rule
     kabita_lines = filter(lambda l: not iscomment(l) and l.strip() != '',
@@ -47,7 +47,7 @@ def render_line(line, chanda_rule):
     if line.strip()=='':
         return ''
     if iscomment(line):
-        return f'<font color="brown">{line}</font>'
+        return f'<font color="grey">{line}</font>'
     if check_chanda(line, chanda_rule):
         return f'<font color="green">{line}</font>'
     tokens = chanda.tokenize_line(line, word_by_word=True)

@@ -72,7 +72,7 @@ def tokenize(word):
             if count > 1:
                 token.pop()
                 token[count - 2] = Swor.LONG
-            else:
+            elif count > 0:
                 token.pop()
     return token
 
@@ -107,10 +107,25 @@ def token_string(token):
     return ''.join([str(t) for t in token])
 
 
-def get_chanda_name(rule):
+def get_chanda_list():
     with open(CHANDA_DATA_FILE,'r') as r:
         names = json.load(r)
-    return names.get(rule,'UNKNOWN')
+    return names
+
+def add_chanda_rule(name, rule):
+    names = get_chanda_list()
+    if rule in names:
+        return False
+    else:
+        names[rule] = name
+        with open(CHANDA_DATA_FILE,'w') as w:
+            json.dump(names,w)
+        return True
+
+
+def get_chanda_name(rule, default='UNKNOWN'):
+    names = get_chanda_list()
+    return names.get(rule, default)
 
 
 if __name__ == '__main__':
