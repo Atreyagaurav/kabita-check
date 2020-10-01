@@ -5,6 +5,10 @@ from enum import Enum
 
 CHANDA_STR = "यमाता राजभान सलगं"
 SEPERATOR_CHARS = " -,;१२३४५६७८९०'\""
+ALL_CHARS = [
+    SEPERATOR_CHARS, "I कखगघङ चछजझञ टठडढण तथदधन पफबभम यरलव शषस ह", "अइउऋ",
+    "S आईएऐओऔऊ", "ाीेैोौूंः:!।", "िुँ", "्"
+]
 CHANDA_DATA_FILE = 'app/data/standard_names.json'
 
 
@@ -34,13 +38,15 @@ class Chars(Enum):
     SHORT_SUB = 6
     UNKNOWN = -1
 
+def parse_exceptions(line):
+    # exception rules for nepali kriyapad
+    reg_pattern = r'[%s]्य[ोौ]'%("|".join(ALL_CHARS[1]))
+    line = re.sub(reg_pattern,'S',line)
+    # add others like this if req
+    return line
 
 def categorize(char):
-    chars = [
-        SEPERATOR_CHARS, "कखगघङ चछजझञ टठडढण तथदधन पफबभम यरलव शषस ह", "अइउऋ",
-        "आईएऐओऔऊ", "ाीेैोौूंः:!।", "िुँ", "्"
-    ]
-    for i, cs in enumerate(chars):
+    for i, cs in enumerate(ALL_CHARS):
         if char in cs:
             return Chars(i)
     return Chars.UNKNOWN
@@ -80,6 +86,7 @@ def tokenize_line(line, word_by_word=False):
     if len(line) == 0 or line[0] == '#':
         return []
 
+    line = parse_exceptions(line)
     words = extract_words(line)
     if word_by_word:
         token = tuple(map(tokenize,
