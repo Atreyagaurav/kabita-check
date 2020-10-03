@@ -3,11 +3,8 @@
     <body>
 	छन्द नाम : {{chanda_name}} <br />
 	छन्द नियम : {{chanda_rule}} <br />
-	गल्तीहरु रातोले देखाइएको छ। रातो माथि Mouse लगेर के गल्ती हो हेर्न सकिन्छ। <br />
 	<br />
-	जाँच सब्दको गर्ने बोलीको नगर्ने भएकोले उदाहरणमा देखाएको जस्तो कहिलेकाही सहीलाई गलत देखाउन सक्छ, त्यस्तो बेलाको लागि माफी चाहन्छु। 
-	<br />
-	<div id="rendered-analysis" style="width: 100%; height: 100%; padding-left: 10px">
+	<div id="rendered-analysis" class="uk-card uk-card-default uk-card-body">
             {% for line in lines %}
 	    {{line}} <br />
 	    {% endfor %}

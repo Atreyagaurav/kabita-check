@@ -12,26 +12,48 @@
 	</script>
 
 	<script src="{{url_for('static', filename='interactive.js')}}"></script>
+	
+	<!-- UIkit CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
     </head>
 
     <body>
-	<div style="width: 100%; height: 100%">
+	<div uk-grid class="uk-container uk-container-expand uk-child-width-1-2@l">
 	    <div>
-		<button onclick="window.location.href='/'" title="फर्कने/सहयोग">Back/Help</button>
-		<!-- <button>Upload File</button> -->
-		<!-- <button>Save to File</button> -->
-		<button onclick="fill_sample()" title="उदाहरण">Example</button>
-		<button onclick="check_kabita()" title="जाच">Check</button>
-	    </div>
-	    <div style="width: 50%; height: 100%; float: left">
-		<textarea id="kabita-maintext" style="width: 100%; height: 100%" placeholder="कबिता यहा टाईप गर्नुहोला ---- Type your Kabita here"></textarea>
+		<p uk-margin uk-sticky>
+		    <button class="uk-button uk-button-default uk-button-small" onclick="window.location.href='/'" title="फर्कने"><span uk-icon="icon: home"></span> Home</button>
+		    <button class="uk-button uk-button-default uk-button-small" onclick="fill_sample()" title="उदाहरण">Example</button>
+		    <button class="uk-button uk-button-primary uk-button-small" onclick="check_kabita()" title="जाच"><span uk-icon="icon: check"></span> Check</button>
+		</p>
+		<textarea id="kabita-maintext" class="uk-textarea uk-width-1-1" rows=20 placeholder="कबिता यहा टाईप गर्नुहोला ---- Type your Kabita here"></textarea>
 	    </div>
 
-	    <div id="kabita-response" style="width: 48%; height: 90%; float: right">
-		कविता बायाँको कोठामा लेखेपछि जाच गर्न "Check" बटन थिच्नुहोस्। <br />
-		Click Check to check the text after Typing the Kabita in the left box.
+	    <div>
+		<p>
+		    <button class="uk-button uk-button-default uk-button-small"
+			    uk-toggle="target: #modal-close-default"
+			    title="सहयोग"><span uk-icon="icon: question"></span> Help</button>
+		    <!-- This is the modal with the default close button -->
+		    <div id="modal-close-default" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body">
+			    <button class="uk-modal-close-default" type="button" uk-close></button>
+			    <h2 class="uk-modal-title">नतिजा हेर्ने तरिका</h2>
+			    <p>गल्तीहरु रातोले देखाइएको छ। रातो माथि Mouse लगेर के गल्ती हो हेर्न सकिन्छ।
+				<br /><br />
+				जाँच सब्दको गर्ने बोलीको नगर्ने भएकोले उदाहरणमा देखाएको जस्तो कहिलेकाही सहीलाई गलत देखाउन सक्छ, त्यस्तो बेलाको लागि माफी चाहन्छु। </p>
+			</div>
+		    </div>
+
+		</p>
+		<div id="kabita-response">
+		    कविता बायाँको कोठामा लेखेपछि जाच गर्न "Check" बटन थिच्नुहोस्। <br />
+		    Click Check to check the text after Typing the Kabita in the left box.
+		</div>
 	    </div>
 	</div>
-
     </body>
 </html>
