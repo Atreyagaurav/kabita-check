@@ -11,8 +11,14 @@ function check_kabita() {
 	    'Content-Type': 'application/json;charset=utf-8'
 	},
 	body: JSON.stringify(data)
-    }).then(res => {return res.text()}).then( data => {
+    }).then(res => {return res.json()}).then( data => {
 	console.log("Request complete! response:", data);
-	document.getElementById('kabita-response').innerHTML = data;
+	document.getElementById('lines-analysed').innerHTML = data["total"];
+	document.getElementById('lines-correct').innerHTML = data["correct"];
+	document.getElementById('lines-error').innerHTML = data["wrong"];
+	document.getElementById('lines-ignored').innerHTML = data["ignored"];
+	document.getElementById('chanda-name').innerHTML = data["chanda_name"];
+	document.getElementById('chanda-rule').innerHTML = data["chanda_rule"];
+	document.getElementById('kabita-response').innerHTML = data["html"];
     })
 }

@@ -14,7 +14,8 @@ def main():
 @app.route('/check', methods=['POST'])
 def check():
     data = flask.request.json
-    return compare.analysis(data['text'].split('\n'))
+    analysis = compare.analysis(data['text'].split('\n'))
+    return flask.jsonify(analysis)
 
 
 @app.route('/kabita_interactive')

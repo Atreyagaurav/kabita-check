@@ -45,13 +45,15 @@ def check_chanda(line, chanda_rule):
 
 def render_line(line, chanda_rule):
     if line.strip()=='':
-        return ''
+        return '',-2
     if iscomment(line):
-        return f'<font color="brown">{line}</font>'
+        return f'<font color="brown">{line}</font>',-1
     if check_chanda(line, chanda_rule):
-        return f'<font color="green">{line}</font>'
+        return f'<font color="green">{line}</font>',1
     tokens = chanda.tokenize_line(line, word_by_word=True)
     words = chanda.extract_words(line)
+    if len(chanda_rule) != len(chanda.tokenize_line(line)):
+        return f'<font color="red" title="length error">{line}</font>',0
     count = 0
     for w, t in zip(words, tokens):
         rule_is = chanda_rule[count:count + len(t)]
@@ -63,7 +65,7 @@ def render_line(line, chanda_rule):
                 f'<font color="red" title="It should be ({rule_is}) here instead of ({here_is})">{w}</font>')
             # multiple same word will break this
         count += len(t)
-    return line
+    return line,0
 
 
 def read_contents():
@@ -79,14 +81,18 @@ def read_contents():
 
 def analysis(lines):
     chanda_rule = extract_chanda_rule(lines)
+    chanda_name=chanda.get_chanda_name(chanda_rule)
 
-    html_lines = map(lambda l: render_line(l, chanda_rule), lines)
+    render_result = [render_line(l, chanda_rule) for l in lines]
+    correct = sum((l[1]==1 for l in render_result))
+    wrong = sum((l[1]==0 for l in render_result))
+    ignored = sum((l[1]==-1 for l in render_result))
 
     with open("app/templates/comparision.html", 'r') as reader:
         template = Template(reader.read())
-
-    html = template.render(title="",chanda_name=chanda.get_chanda_name(chanda_rule), chanda_rule=chanda_rule, lines=html_lines)
-    return html
+    html_lines = (l[0] for l in render_result)
+    html = template.render(title="",lines=html_lines)
+    return dict(total=correct+wrong+ignored,correct=correct, wrong=wrong, ignored=ignored, chanda_name=chanda_name, chanda_rule=chanda_rule, html=html)
 
 
 if __name__ == '__main__':
