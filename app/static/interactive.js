@@ -22,5 +22,6 @@ function check_kabita() {
 	document.getElementById('kabita-response').innerHTML = data["html_lines"];
 	document.getElementById('kabita-errors').innerHTML = data["err_messages"];
 	document.getElementById('kabita-response').scrollIntoView();
+
     })
 }
