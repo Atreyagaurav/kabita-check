@@ -19,7 +19,8 @@ function check_kabita() {
 	document.getElementById('lines-ignored').innerHTML = data["ignored"];
 	document.getElementById('chanda-name').innerHTML = data["chanda_name"];
 	document.getElementById('chanda-rule').innerHTML = data["chanda_rule"];
-	document.getElementById('kabita-response').innerHTML = data["html"];
+	document.getElementById('kabita-response').innerHTML = data["html_lines"].replace('\n','<br />');
+	document.getElementById('kabita-errors').innerHTML = data["err_messages"].replace('\n','<br />');
 	document.getElementById('analysis-response').scrollIntoView();
     })
 }

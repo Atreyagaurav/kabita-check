@@ -52,11 +52,13 @@ def categorize(char):
     return Chars.UNKNOWN
 
 
-def tokenize(word):
-    cat = (categorize(c) for c in word)
+def tokenize(word, debug = False):
+    cat = ((categorize(c),c) for c in word)
     token = []
-    for c in cat:
+    for c,cw in cat:
         count = len(token)
+        if debug:
+            print(cw,c,":",token_string(token))
         if c is Chars.SHORT1 or c is Chars.SHORT2:
             token.append(Swor.SHORT)
         elif c is Chars.LONG:
