@@ -19,22 +19,38 @@
 	<!-- UIkit JS -->
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
+	<style>
+	 .fill-height, html, body
+	 {
+	     height: 100%;
+	 }
+	 h3 {
+	     background-color:  rgba(200,80,0,0.8);
+	     text-align: center;
+	 }
+	 html {
+	     -webkit-background-size: cover;
+	     background: linear-gradient(130deg, rgba(200,200,0,0.6),rgba(200,0,0,0.6)) no-repeat center center fixed;
+	     color: black;
+	 }
+	</style>
     </head>
 
     <body>
-	<div uk-grid class="uk-container uk-container-expand uk-child-width-1-2@l">
-	    <div>
-		<div uk-margin uk-sticky class="uk-background-muted">
-		    <button class="uk-button uk-button-default uk-button-small" onclick="window.location.href='/'" title="फर्कने"><span uk-icon="icon: home"></span> Home</button>
-		    <button class="uk-button uk-button-default uk-button-small" onclick="fill_sample()" title="उदाहरण">Example</button>
+	<div uk-grid class="uk-container uk-container-expand uk-child-width-1-2@l fill-height">
+	    <div id="input-area" fill-height>
+		<div uk-margin uk-sticky>
+		    <button class="uk-button uk-button-default uk-button-small uk-background-muted" onclick="window.location.href='/'" title="फर्कने"><span uk-icon="icon: home"></span> Home</button>
+		    <button class="uk-button uk-button-default uk-button-small uk-background-muted" onclick="fill_sample()" title="उदाहरण">Example</button>
 		    <button class="uk-button uk-button-primary uk-button-small" onclick="check_kabita()" title="जाच"><span uk-icon="icon: check"></span> Check</button>
 		</div>
-		<textarea id="kabita-maintext" class="uk-textarea uk-width-1-1" rows=20 placeholder="कबिता यहा टाईप गर्नुहोला ---- Type your Kabita here"></textarea>
+		<textarea id="kabita-maintext" class="uk-textarea uk-width-1-1" style="height:80%;" placeholder="कबिता यहा टाईप गर्नुहोला ---- Type your Kabita here"></textarea>
+		<p style="text-align:right;">NOTE: टाईप unicode मा गर्नुहोला।</p>
 	    </div>
 
-	    <div id="analysis-response">
-		<div class="uk-background-muted">
-		    <button class="uk-button uk-button-default uk-button-small"
+	    <div id="analysis-response" >
+		<div>
+		    <button class="uk-button uk-button-default uk-button-small uk-background-muted"
 			    uk-toggle="target: #modal-close-default"
 			    title="सहयोग"><span uk-icon="icon: question"></span> Help</button>
 		    <!-- This is the modal with the default close button -->
@@ -45,13 +61,18 @@
 			    <p>गल्तीहरु रातोले देखाइएको छ। रातो माथि Mouse लगेर के गल्ती हो हेर्न सकिन्छ।
 				<br /><br />
 				जाँच सब्दको गर्ने बोलीको नगर्ने भएकोले उदाहरणमा देखाएको जस्तो कहिलेकाही सहीलाई गलत देखाउन सक्छ, त्यस्तो बेलाको लागि माफी चाहन्छु। </p>
+				<p>सुझाबको लागि मेरो email <a href="mailto:allmanpride@gmail.com">allmanpride@gmail.com</a> मा email पठाउन आग्रह गर्दछु।<p>
 			</div>
 		    </div>
-		    Analysis Result: 
-		    <span class="uk-label"><span id="lines-analysed">0</span> analysed</span>
-		    <span class="uk-label uk-label-success"><span id="lines-correct">0</span> correct</span>
-		    <span class="uk-label uk-label-warning"><span id="lines-ignored">0</span> ignored</span>
-		    <span class="uk-label uk-label-danger"><span id="lines-error">0</span> error</span>
+		    <div>
+			<h3>Analysis Result</h3>
+			<p style="text-align:right;">
+			    <span class="uk-label"><span id="lines-analysed">0</span> analysed</span>
+			    <span class="uk-label uk-label-success"><span id="lines-correct">0</span> correct</span>
+			    <span class="uk-label uk-label-warning"><span id="lines-ignored">0</span> ignored</span>
+			    <span class="uk-label uk-label-danger"><span id="lines-error">0</span> error</span>
+			</p>
+		    </div>
 		</div>
 		<div id="response-header">
 		    छन्द : <span id="chanda-name"></span> (नियम :<span id="chanda-rule"></span>)
