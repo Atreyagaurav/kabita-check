@@ -92,7 +92,7 @@ def analysis(lines):
     if wrong == 0:
         err_messages = 'सबै लाईन हरु सहि छन्।'
     else:
-        err_messages = '\n'.join((f'line-{i+1}: {l[2]}'
+        err_messages = '<br />'.join((f'line-{i+1}: {l[2]}'
                                   for i, l in enumerate(render_result)
                                   if l[1] == 0))
     ignored = sum((l[1] == -1 for l in render_result))
