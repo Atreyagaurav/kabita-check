@@ -20,5 +20,6 @@ function check_kabita() {
 	document.getElementById('chanda-name').innerHTML = data["chanda_name"];
 	document.getElementById('chanda-rule').innerHTML = data["chanda_rule"];
 	document.getElementById('kabita-response').innerHTML = data["html"];
+	document.getElementById('analysis-response').scrollIntoView();
     })
 }

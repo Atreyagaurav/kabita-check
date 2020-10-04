@@ -24,16 +24,16 @@
     <body>
 	<div uk-grid class="uk-container uk-container-expand uk-child-width-1-2@l">
 	    <div>
-		<p uk-margin uk-sticky>
+		<div uk-margin uk-sticky class="uk-background-muted">
 		    <button class="uk-button uk-button-default uk-button-small" onclick="window.location.href='/'" title="फर्कने"><span uk-icon="icon: home"></span> Home</button>
 		    <button class="uk-button uk-button-default uk-button-small" onclick="fill_sample()" title="उदाहरण">Example</button>
 		    <button class="uk-button uk-button-primary uk-button-small" onclick="check_kabita()" title="जाच"><span uk-icon="icon: check"></span> Check</button>
-		</p>
+		</div>
 		<textarea id="kabita-maintext" class="uk-textarea uk-width-1-1" rows=20 placeholder="कबिता यहा टाईप गर्नुहोला ---- Type your Kabita here"></textarea>
 	    </div>
 
-	    <div>
-		<p>
+	    <div id="analysis-response">
+		<div class="uk-background-muted">
 		    <button class="uk-button uk-button-default uk-button-small"
 			    uk-toggle="target: #modal-close-default"
 			    title="सहयोग"><span uk-icon="icon: question"></span> Help</button>
@@ -52,7 +52,7 @@
 		    <span class="uk-label uk-label-success"><span id="lines-correct">0</span> correct</span>
 		    <span class="uk-label uk-label-warning"><span id="lines-ignored">0</span> ignored</span>
 		    <span class="uk-label uk-label-danger"><span id="lines-error">0</span> error</span>
-		</p>
+		</div>
 		<div id="response-header">
 		    छन्द : <span id="chanda-name"></span> (नियम :<span id="chanda-rule"></span>)
 		</div>
