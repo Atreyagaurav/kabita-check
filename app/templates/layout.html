@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+	<meta charset="utf-8" />
+	
+	<title>
+	    {% block page_title %}{% endblock %} | Kabita Analysis
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179276102-1"></script>
+	<script>
+	 window.dataLayer = window.dataLayer || [];
+	 function gtag(){dataLayer.push(arguments);}
+	 gtag('js', new Date());
+
+	 gtag('config', 'UA-179276102-1');
+	</script>
+	
+	<!-- UIkit CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+	
+	<!-- Custom css -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css', v='1.22') }}" />
+
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
+	{% block css %}{% endblock %}
+    </head>
+
+    <body uk-height-viewport>
+	<header class="main-header">
+	    <div class="main-navbar" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+		<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+		    <div class="uk-navbar-left">
+			<ul class="uk-navbar-nav">
+			    <li><a href="/home">Home</a></li>
+			    <li><a href="/kabita_interactive">Interactive App</a></li>
+			    <li><a href="/browse_chanda">Chanda List</a></li>
+			    <li><a href="/browse_words">Words List</a></li>
+			    <li><a href="/about">About Us</a></li>
+			    <li><a href="/developers">For Developers</a></li>
+			    <li><a href="/contact">Contact</a></li>
+			</ul>
+		    </div>
+		</nav>
+	    </div>
+	</header>
+	{% block body %}{% endblock %}
+	<footer class="uk-background-secondary uk-light main-footer">
+	    The source code for this webapp as well as the backend is available at my github <a href="https://github.com/Atreyagaurav/kabita-check/"><span class="uk-icon-button uk-margin-small-right" uk-icon="github"></span> Atreyagaurav</a>  
+	</footer>
+	{% block js %}{% endblock %}
+    </body>
+</html>

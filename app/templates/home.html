@@ -1,33 +1,9 @@
-<html>
-    <head><title>Welcome|Kabita Analysis </title>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179276102-1"></script>
-	<script>
-	 window.dataLayer = window.dataLayer || [];
-	 function gtag(){dataLayer.push(arguments);}
-	 gtag('js', new Date());
+{% extends "layout.html" %}
+{% block page_title %}
+Welcome
+{% endblock %}
 
-	 gtag('config', 'UA-179276102-1');
-	</script>
-	
-	<!-- UIkit CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
-	<style>
-	 h3 {
-	     background-color:  rgba(200,80,0,0.6);
-	     text-align: center;
-	 }
-	 body {
-	     background-image: linear-gradient(130deg, rgba(200,200,0,0.6),rgba(200,0,0,0.6));
-	     color: black;
-	 }
-	</style>
-
-	<!-- UIkit JS -->
-	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
-    </head>
-    <body class="grad">
+{% block body %}
 	<h2 class="uk-heading-small" style="text-align: center;">स्वागतम् | Welcome</h2>
 	<div style="text-align: center;">यो website छन्द कविता जाँच गर्ने उद्देश्यका साथ बनाइएको हो। unicode मा लेखिएको कवितामा भएका मात्राहरु हेरेर ह्रश्व र दीर्घ बुझ्दछ; अनि सबै लाईन एक अर्का संग तुलना गरिन्छ।</div>
 
@@ -53,14 +29,4 @@
 		    <p>Analysis result shows the overall analysis of the Kabita, red shows errors while green shows count of correct lines.</p>
 		</div>
 	</div>
-	<h3>Informations for Programmers/Developers</h3>
-	<ul class="uk-list uk-list-large">
-	    <li>The API is available in /check endpoint, just send a JSON with {"text":"your kabita"}, it'll return the analysis result as well as rendered HTML with mistakes highlighted in Red.</li>
-	    <li>Save file and load file features are currently under development. I'm not great with javascript so the development is super slow.</li>
-	    <li>I'd also like to integrate a nepali dictionary to check the correctness of words as well as chanda, and maybe suggest solutions for errors.</li>
-	</ul>
-	<hr>
-	The source code for this webapp as well as the backend is available at my github <a href="https://github.com/Atreyagaurav/kabita-check/"><span class="uk-icon-button uk-margin-small-right" uk-icon="github"></span> Atreyagaurav</a>  
-	
-    </body>
-</html>
+{% endblock %}

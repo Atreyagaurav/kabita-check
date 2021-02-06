@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block page_title %}
+Developers
+{% endblock %}
+
+{% block body %}
+<div>
+    <h3>Informations for Programmers/Developers</h3>
+    The API is available in /api endpoint, right now there are only two endpoints, I'll add more as I develop them.
+    <ul class="uk-list uk-list-large">
+	<li>The API for checking chanda is available in /api/check endpoint, just send a JSON with {"text":"your kabita"}, it'll return the analysis result as well as rendered HTML with mistakes highlighted in Red.</li>
+	<li>The API for chanda list is available in /api/all_chanda endpoint.</li>
+    </ul>
+
+    <h4> Other details: </h4>
+    <ul class="uk-list">
+	<li>Save file and load file features are currently under development. I'm not great with javascript so the development is super slow.</li>
+	<li>I'd also like to integrate a nepali dictionary to check the correctness of words as well as chanda, and maybe suggest solutions for errors.</li>
+    </ul>
+</div>
+{% endblock %}

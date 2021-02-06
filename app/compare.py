@@ -19,7 +19,7 @@ def extract_chanda_rule(lines):
         line = comment[1:].strip()
         if re.match('[IS]+', line):
             return ''.join([c for c in line if c in 'IS'])
-    #if not specified or find, guess the rule
+    # if not specified or find, guess the rule
     kabita_lines = filter(lambda l: not iscomment(l) and l.strip() != '',
                           lines)
     rules = map(lambda l: chanda.token_string(chanda.tokenize_line(l)),
@@ -27,7 +27,8 @@ def extract_chanda_rule(lines):
     try:
         rule = mode(rules)
     except StatisticsError:
-        #mode couldn't be found: not error on my laptop but shows error on heroku
+        # mode couldn't be found: not error on my laptop but shows
+        # error on heroku
         rule = ''
     if len(rule) > 0:
         rule = rule[:-1] + 'S'
@@ -36,9 +37,9 @@ def extract_chanda_rule(lines):
 
 def check_chanda(line, chanda_rule):
     tokens = chanda.tokenize_line(line)
-    if len(tokens) > 0:
-        tokens[-1] = chanda.Swor('S')
-    return chanda.token_string(tokens) == chanda_rule
+    token = [t[1] for t in tokens]
+    rule = [t[1] for t in chanda.tokenize(chanda_rule)]
+    return token == rule
 
 
 def render_line(line, chanda_rule):
@@ -53,7 +54,8 @@ def render_line(line, chanda_rule):
     line_len = len(chanda.tokenize_line(line))
     rule_len = len(chanda_rule)
     if rule_len != line_len:
-        return f'<font color="red" title="length error">{line}</font>', 0, f'यो लाईनमा {rule_len} बर्ण हुन पर्नेमा {line_len} छ।'
+        return (f'<font color="red" title="length error">{line}</font>',
+                0, f'यो लाईनमा {rule_len} बर्ण हुन पर्नेमा {line_len} छ।')
     count = 0
     instruction = ''
     for w, t in zip(words, tokens):
@@ -82,28 +84,30 @@ def read_contents():
     return lines
 
 
-def analysis(lines):
-    chanda_rule = extract_chanda_rule(lines)
-    chanda_name = chanda.get_chanda_name(chanda_rule)
+def analysis(lines, rule='auto-detect'):
+    if rule == 'auto-detect' or not rule:
+        rule = extract_chanda_rule(lines)
+    chanda_name = chanda.get_chanda_name(rule)
 
-    render_result = [render_line(l, chanda_rule) for l in lines]
+    render_result = [render_line(l, rule) for l in lines]
     correct = sum((l[1] == 1 for l in render_result))
     wrong = sum((l[1] == 0 for l in render_result))
     if wrong == 0:
         err_messages = 'सबै लाईन हरु सहि छन्।'
     else:
         err_messages = '<br />'.join((f'line-{i+1}: {l[2]}'
-                                  for i, l in enumerate(render_result)
-                                  if l[1] == 0))
+                                      for i, l in enumerate(render_result)
+                                      if l[1] == 0))
     ignored = sum((l[1] == -1 for l in render_result))
 
-    html_lines = '<br />'.join((f'<font color="grey">{i+1}:</font>{l[0]}' for i,l in enumerate(render_result)))
+    html_lines = '<br />'.join((f'<font color="grey">{i+1}:</font>{l[0]}'
+                                for i, l in enumerate(render_result)))
     return dict(total=correct + wrong + ignored,
                 correct=correct,
                 wrong=wrong,
                 ignored=ignored,
                 chanda_name=chanda_name,
-                chanda_rule=chanda_rule,
+                chanda_rule=rule,
                 html_lines=html_lines,
                 err_messages=err_messages)
 

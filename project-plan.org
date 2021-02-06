@@ -1,0 +1,115 @@
+* future features (Webapp)
+** browse chanda list
+users should be able to browse through the list of chanda available in the list.
+
+better to have filters, and if possible examples of the chanda.
+
+** interactive chanda check
+Same as the one right now, should be able to check the text in the text area for mistakes in the chanda.
+
+TODO: add pre selection of the chanda to check from the above list.
+
+** Interactive spell check
+If possible having the nepali dictionary in unicode may make it possible to not only check the chanda but also the correctness of the words. Like hrashwo dirga of the words.
+
+** Contact form
+A page with contact form in case people want to send some messages/suggestions or feature request.
+
+** Process files
+~LOW PRIORITY~
+
+It'd be great to have the option to parse a file for errors. But since most people would like to upload .doc instead of .txt it can wait.
+
+It is also a good idea to develop this as a paid service. 
+
+** search words
+If possible the option to search words matching a certain pattern, and meaning.
+
+It can help people come up with words for chanda kabita.
+
+* Other features
+
+** Spell check as a service
+Developing the dictionary in aspell compatible format can make it possible to extent its usages in other cases.
+
+* Development plans
+** Pages
+- main welcome page
+- contact page
+- about page
+- interactive chanda check page
+- browse chanda list page
+- browse words page
+
+** Templates
+- main layout with header/footers
+- information pages: about & contact
+- interactive pages: chanda check, browse chanda list & browse words
+
+*** Main layout 
+main layout of the website which is going to be used to fill the content part later. All other layouts will inherit this layout.
+
+- with all important stylesheets and js on it. 
+- blocks for content and extra stylesheets and js.
+
+*** Imformation pages
+*About page* will have information about the project, github link. And if possible future plans and such.
+
+*Contant page* will have a simple form which can be used to send the request to the authors/developers.
+
+*** Interactive pages
+These pages have interactive elements.
+
+*Chanda check* page will have interactive textarea and another area to show the analysis results. 
+
+*Chanda browse* page will have different options to search the available chanda list. And filter it with number of characters and so on. 
+
+*Word browse* page will have the option to search words from its meaning and filter it with the sounds, so that it can be used in the chanda writing process. *NOTE*: /this page will only be usable after the dictionary is available./
+
+
+
+
+** API
+The API will need to have following endpoints. 
+
+*** check string
+Check the given string for the chanda rule. 
+
+Request: ~GET~ 
+#+begin_src json
+{
+    "rule": "ississississ",
+    "text": "main kabita text here"
+}
+#+end_src
+
+*** get chanda
+Get all chanda list from the server, or filtered list.
+
+Request: ~GET~
+#+begin_src json
+{
+    "min_characters": 4,
+    "max_characters": 12,
+}
+#+end_src
+
+*** get word
+Get a word with given meaning
+
+Request: ~GET~
+#+begin_src json
+{
+    "meaning": "meaning of the word",
+    "rule": "rule for the word to follow",
+}
+#+end_src
+
+** Website Endpoints
+Each one for each pages described above. 
+*** Contact Form
+Endpoint for contant form
+
+Request : ~GET~ ~POST~
+
+Form Data: email, name, suggestions/queries.
