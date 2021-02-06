@@ -2,7 +2,7 @@ import re
 import json
 from enum import Enum
 
-CHANDA_STR = "यमाता राजभान सलगं"
+CHANDA_STR = "यमाताराजभानसलगं"
 SEPERATOR_CHARS = " -,;१२३४५६७८९०'\""
 ALL_CHARS = [
     SEPERATOR_CHARS, "Ii कखगघङ चछजझञ टठडढण तथदधन पफबभम यरलव शषस ह", "अइउऋ",
@@ -26,6 +26,42 @@ class Swor(Enum):
         if (self is Swor.ANY) or (other is Swor.ANY):
             return True
         return False
+
+
+class Chanda:
+    def __init__(self, rule, name=None, gans=None):
+        self.rule = rule
+        self.si = get_si_string(rule)
+        self.length = len(self.si)
+        self.rule_tokens = tokenize(rule)
+        self.gans = token_gan(self.si, gans)
+        if not name:
+            name = get_chanda_name(rule)
+        self.name = name.strip()
+
+    def check(self, tokens):
+        token = [t[1] for t in tokens]
+        return token == self.rule_tokens
+
+    def jsonize(self):
+        return dict(
+            name=self.name,
+            rule=self.rule,
+            length=self.length,
+            gans=self.gans,
+            index=self.name[0]
+        )
+
+
+class Line:
+    def __init__(self, value):
+        self.value = value
+        self.tokens = tokenize_line(value)
+        self.si = token_string(self.tokens)
+        self.length = len(self.si)
+
+    def match(self, chanda):
+        return chanda.check(self.tokens)
 
 
 class Chars(Enum):
@@ -110,6 +146,35 @@ def token_string(token):
     return ''.join([str(t[1]) for t in token])
 
 
+def get_all_gan():
+    gans = tokenize(CHANDA_STR)
+    prev = 0
+    all_gans = dict()
+    for i in range(len(gans)-2):
+        gan, rule = CHANDA_STR[prev], token_string(gans[i:i+3])
+        all_gans[rule] = gan
+        prev = gans[i][0] + 1
+    return all_gans
+
+
+def token_gan(token, gans=None):
+    if not gans:
+        gans = get_all_gan()
+    if isinstance(token, str):
+        rule = get_si_string(token)
+    else:
+        rule = token_string(token)
+    gan_str = ''
+    while len(rule) > 0:
+        if len(rule) >= 3:
+            gan_str += gans[rule[:3]] + ' '
+            rule = rule[3:]
+        else:
+            gan_str += 'गु.' if rule[0] == 'S' else 'ल.'
+            rule = rule[1:]
+    return gan_str.strip()
+
+
 def get_si_string(line):
     return ''.join(filter(lambda x: x in 'SIO', line.upper()))
 
@@ -124,22 +189,23 @@ def get_chanda_name(rule):
 
 def get_all_chanda():
     all_chanda = dict()
+    gans = get_all_gan()
     with open(CHANDA_DATA_TXT, 'r') as r:
         for line in r:
             if len(line) == 0 or line[0] == '#':
                 continue
             data = line.split(';')
-            if len(data)<3:
+            if len(data) < 2:
                 continue
             name = data[1].strip()
             rule = data[0].strip()
-            all_chanda[name] = rule
+            all_chanda[name] = Chanda(rule, name=name, gans=gans)
     with open(CHANDA_DATA_JSON, 'r') as r:
         names = json.load(r)
     for rule, name in names.items():
         if name not in all_chanda:
-            all_chanda[name] = rule
-    return all_chanda
+            all_chanda[name] = Chanda(rule, name=name, gans=gans)
+    return sorted(all_chanda.values(), key=lambda c: c.length)
 
 
 if __name__ == '__main__':

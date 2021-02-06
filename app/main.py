@@ -26,8 +26,13 @@ def browse_words():
 
 @app.route('/browse_chanda')
 def browse_chanda():
+    chanda_data = chanda.get_all_chanda()
+    index_name = sorted(set(map(lambda c: c.name[0], chanda_data)))
+    index_length = sorted(set(map(lambda c: c.length, chanda_data)))
     return flask.render_template('browse_chanda.html',
-                                 chanda_dict=chanda.get_all_chanda())
+                                 all_chandas=chanda_data,
+                                 index=index_name,
+                                 index2=index_length)
 
 
 @app.route('/about')
@@ -48,7 +53,7 @@ def developers():
 @app.route('/kabita_interactive')
 def interactive():
     return flask.render_template('kabita_interactive.html',
-                                 chanda_dict=chanda.get_all_chanda())
+                                 all_chanda=chanda.get_all_chanda())
 
 
 @app.route('/api/check', methods=['POST'])
@@ -60,4 +65,12 @@ def api_check():
 
 @app.route('/api/all_chanda', methods=['GET'])
 def api_all_chanda():
-    return chanda.get_all_chanda()
+    chandas = chanda.get_all_chanda()
+    chanda_data = list(map(lambda c: c.jsonize(), chandas))
+    index_name = list(set(map(lambda c: c['index'], chanda_data)))
+    index_length = list(set(map(lambda c: c['length'], chanda_data)))
+    return dict(
+        index=index_name,
+        index2=index_length,
+        data=chanda_data
+    )

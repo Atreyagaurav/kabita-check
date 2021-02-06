@@ -34,3 +34,7 @@ body {
 .alignright {
     float: right;
 }
+
+.aligncenter {
+    float: center;
+}

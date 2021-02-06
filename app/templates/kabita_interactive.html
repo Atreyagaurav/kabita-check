@@ -12,8 +12,8 @@
 	    <button class="uk-button uk-button-default uk-button-small uk-background-muted" onclick="fill_sample()" title="उदाहरण">Example</button>
 	    छन्द:<select class="uk-form-select" name="chanda-name" id="chanda-dropdown" onchange="chanda_dropdown_changed()">
 		<option value="auto-detect">Detect</option>
-		{% for chanda_name,rule in chanda_dict.items() %}
-		<option value="{{rule}}">{{chanda_name}}</option>
+		{% for chanda in all_chanda %}
+		<option value="{{chanda.rule}}" tooltip="{{chanda.length}}-{{chanda.rule}}">{{chanda.name}}</option>
 		{% endfor %}
 	    </select>
 	    <!-- नियम:<span id="chanda-dropdown-rule"></span> -->
