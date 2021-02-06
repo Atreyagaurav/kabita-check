@@ -3,7 +3,7 @@ h3 {
     text-align: center;
 }
 body {
-    background-image: linear-gradient(130deg, rgba(200,200,0,0.6),rgba(200,0,0,0.6));
+    /* background-image: linear-gradient(130deg, rgba(200,100,0,0.6),rgba(220,0,0,0.8)); */
     color: black;
     flex-grow: 1;
 }
@@ -38,3 +38,4 @@ body {
 .aligncenter {
     float: center;
 }
+
