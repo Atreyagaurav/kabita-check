@@ -182,8 +182,8 @@ def get_si_string(line):
 def get_chanda_name(rule):
     rule = get_si_string(rule)
     all_chanda = get_all_chanda()
-    match = filter(lambda x: get_si_string(x[1]) == rule, all_chanda.items())
-    name = map(lambda x: x[0], match)
+    match = filter(lambda x: x.si == rule, all_chanda)
+    name = map(lambda x: x.name, match)
     return '; '.join(name)
 
 
