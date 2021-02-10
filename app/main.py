@@ -1,9 +1,10 @@
 import flask
-#from flask_cors import CORS
+from flask import request
+# from flask_cors import CORS
 
 import app.compare as compare
 import app.chanda as chanda
-
+import app.dictionary as dictionary
 
 app = flask.Flask(__name__)
 # CORS(app)
@@ -21,7 +22,16 @@ def home():
 
 @app.route('/browse_words')
 def browse_words():
-    return flask.render_template('browse_words.html')
+    rule = request.args.get('rule', '')
+    word = request.args.get('word', '')
+    if rule or word:
+        matches = dictionary.wordlist(rule.upper(), word.strip())
+    else:
+        matches = []
+    return flask.render_template('browse_words.html',
+                                 wordlist=matches,
+                                 rule=rule,
+                                 word=word)
 
 
 @app.route('/browse_chanda')
@@ -59,8 +69,15 @@ def interactive():
 @app.route('/api/check', methods=['POST'])
 def api_check():
     data = flask.request.json
-    analysis = compare.analysis(data['text'].split('\n'), rule=data['rule'])
+    analysis = compare.analysis(data['text'], rule=data['rule'])
     return flask.jsonify(analysis)
+
+
+@app.route('/api/wordlist', methods=['GET'])
+def get_wordlist():
+    data = flask.request.json
+    words = dictionary.wordlist(rule=data['rule'], meaning=data.get('meaning'))
+    return flask.jsonify(words)
 
 
 @app.route('/api/all_chanda', methods=['GET'])

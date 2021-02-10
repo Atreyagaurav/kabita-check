@@ -5,8 +5,46 @@ Words List
 
 {% block body %}
 <div>
-    <p>Here the list of words will be posted.</p>
-    <p>The wordlist will be available after I can find a unicode dictionary.
-	I plan to use the words on there to make a service where you can search a certain word as per its meaning as well as the swor</p>
+    <div class="uk-margin">
+	<form class="uk-form uk-form-default" action="{{ url_for('browse_words') }}">
+	    <label>Search Words:</label>
+            <input class="uk-text" type="search" name="rule" placeholder="Rule in IS-string..." value="{{rule}}">
+            <input class="uk-text" type="search" name="word" placeholder="Search Word" value="{{word}}">
+            <button type="submit" class="uk-search-icon-flip" uk-search-icon />
+	</form>
+    </div>
+    {% if wordlist|length == 0 %}
+    <div>
+	<p>
+	    {% if rule|length >0 or word|length >0 %}
+	    No result found for the search, try again.
+	    {% else %}
+	    Enter the rule in the search bar and then search for the words. You can browse through the words, as well as their meanings.
+	    {% endif %}
+	</p>
+	
+    </div>
+    {% else %}
+    <div class="uk-padding">
+	<dl class="uk-description-list uk-description-list-divider">
+	    {% for entry in wordlist %}
+	    <dt>{{entry.word}} ({{entry.category}})</dt>
+	    <dd>{% for meaning in entry.meanings %}
+		{{loop.index}}. {{meaning}}<br />
+		{% endfor %}
+	    </dd>
+	    {% endfor %}
+	</dl>
+    </div>
+    {% endif %}
+    <div>
+	<h3>How to search</h3>
+	<ul class="uk-list uk-list-square">
+	    <li>To search for the words with certain rule, enter the rule in the first textbox.</li>
+	    <li>To search a word starting from/matching word, enter the characters in the second textbox.</li>
+	    <li>You can also search for the words which ends with the given characters, add '-' (hyphen) at the start of the second box.</li>
+	    <li>You can combine both boxes to find results suitable to you, if you want to only apply one, then clear the another.</li>
+	</ul>
+    </div>
 </div>
 {% endblock %}

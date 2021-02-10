@@ -12,6 +12,13 @@ CHANDA_DATA_JSON = 'app/data/standard_names.json'
 CHANDA_DATA_TXT = 'app/data/chanda-lists.txt'
 
 
+class LineType(Enum):
+    UNCHECKED = 0
+    CORRECT = 1
+    WRONG = 2
+    WARNING = 3
+
+    
 class Swor(Enum):
     LONG = 'S'
     SHORT = 'I'
@@ -41,7 +48,12 @@ class Chanda:
 
     def check(self, tokens):
         token = [t[1] for t in tokens]
-        return token == self.rule_tokens
+        rule = [t[1] for t in self.rule_tokens]
+        if len(token) > 0 and \
+           self.length > 0 and \
+           rule[-1] == Swor.LONG:
+            token[-1] = Swor.LONG
+        return token == rule
 
     def jsonize(self):
         return dict(
@@ -52,6 +64,9 @@ class Chanda:
             index=self.name[0]
         )
 
+    def __repr__(self):
+        return f'{self.name}: {self.gans} ({self.si})'
+
 
 class Line:
     def __init__(self, value):
@@ -59,9 +74,47 @@ class Line:
         self.tokens = tokenize_line(value)
         self.si = token_string(self.tokens)
         self.length = len(self.si)
+        self.check = LineType.UNCHECKED
+        self.html = value
+        self.comment = ''
 
     def match(self, chanda):
-        return chanda.check(self.tokens)
+        if self.iscomment():
+            self.html = f'<font color="brown">{self.value}</font>'
+            self.comment = 'जाँच नगर्ने।'
+        elif chanda.check(self.tokens):
+            self.check = LineType.CORRECT
+            self.html = f'<font color="green">{self.value}</font>'
+            self.comment = 'सहि छ।'
+        elif self.length != chanda.length:
+            self.check = LineType.WRONG
+            self.html = f'<font color="red" title="length error">' +\
+                '{self.value}</font>'
+            self.comment = f'यो लाईनमा {chanda.length} बर्ण' +\
+                ' हुन पर्नेमा {self.length} छ।'
+        else:
+            self.check = LineType.WRONG
+            self.comment = ''
+            prev = 0
+            self.html = ''
+            for token, rule_token in zip(self.tokens, chanda.rule_tokens):
+                word = self.value[prev:token[0]+1]
+                if token[1] == rule_token[1]:
+                    self.html += (f'<font color="green" title="{token[1]}">{word}</font>')
+                else:
+                    self.html += (f'<font color="red" title="{token[1]} instead of {rule_token[1]}">{word}</font>')
+                    self.comment += f'{word}: {token[1]} instead of {rule_token[1]};'
+                prev = token[0]+1
+        return self.check
+
+    def iscomment(self):
+        if self.value.strip() == '' or self.value[0] == '#' or self.si == '':
+            return True
+        return False
+        
+
+    def __repr__(self):
+        return f'{self.value} ({self.si})'
 
 
 class Chars(Enum):
