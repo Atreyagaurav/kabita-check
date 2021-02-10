@@ -23,3 +23,10 @@ def wordlist(rule=None, start=None):
             return value
 
         return [get_dict(row) for row in matches]
+
+
+def just_words():
+    with open(dict_file, 'r', newline='') as r:
+        reader = csv.reader(r, quotechar='"')
+        next(reader)
+        return set(map(lambda l: l[0], reader))

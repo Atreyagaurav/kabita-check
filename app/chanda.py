@@ -2,6 +2,8 @@ import re
 import json
 from enum import Enum
 
+import app.dictionary as dictionary
+
 CHANDA_STR = "यमाताराजभानसलगं"
 SEPERATOR_CHARS = " -,;१२३४५६७८९०'\""
 ALL_CHARS = [
@@ -18,7 +20,7 @@ class LineType(Enum):
     WRONG = 2
     WARNING = 3
 
-    
+
 class Swor(Enum):
     LONG = 'S'
     SHORT = 'I'
@@ -76,25 +78,34 @@ class Line:
         self.length = len(self.si)
         self.check = LineType.UNCHECKED
         self.html = value
-        self.comment = ''
+        self.comments = []
+
+    def check_spelling(self, all_words=None):
+        if not all_words:
+            all_words = dictionary.just_words()
+        words = extract_words(self.value)
+        for wrd in words:
+            if wrd.strip() not in all_words:
+                if self.check != LineType.WRONG:
+                    self.check = LineType.WARNING
+                self.comments.append(f'{wrd} शब्दकोषमा छैन।')
 
     def match(self, chanda):
         if self.iscomment():
             self.html = f'<font color="brown">{self.value}</font>'
-            self.comment = 'जाँच नगर्ने।'
+            self.comments = ['जाँच नगर्ने।']
         elif chanda.check(self.tokens):
             self.check = LineType.CORRECT
             self.html = f'<font color="green">{self.value}</font>'
-            self.comment = 'सहि छ।'
+            self.comments.append('छन्द सहि छ।')
         elif self.length != chanda.length:
             self.check = LineType.WRONG
-            self.html = f'<font color="red" title="length error">' +\
-                '{self.value}</font>'
-            self.comment = f'यो लाईनमा {chanda.length} बर्ण' +\
-                ' हुन पर्नेमा {self.length} छ।'
+            self.html = '<font color="red" title="length error">' +\
+                f'{self.value}</font>'
+            self.comments.append(f'यो लाईनमा {chanda.length} बर्ण' +
+                                 f' हुन पर्नेमा {self.length} छ।')
         else:
             self.check = LineType.WRONG
-            self.comment = ''
             prev = 0
             self.html = ''
             for token, rule_token in zip(self.tokens, chanda.rule_tokens):
@@ -103,7 +114,8 @@ class Line:
                     self.html += (f'<font color="green" title="{token[1]}">{word}</font>')
                 else:
                     self.html += (f'<font color="red" title="{token[1]} instead of {rule_token[1]}">{word}</font>')
-                    self.comment += f'{word}: {token[1]} instead of {rule_token[1]};'
+                    self.comments.append(f'{word}: {token[1]} instead of' +
+                                         f' {rule_token[1]}')
                 prev = token[0]+1
         return self.check
 
@@ -111,7 +123,6 @@ class Line:
         if self.value.strip() == '' or self.value[0] == '#' or self.si == '':
             return True
         return False
-        
 
     def __repr__(self):
         return f'{self.value} ({self.si})'

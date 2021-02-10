@@ -5,6 +5,7 @@ import sys
 from statistics import mode, StatisticsError
 
 import app.chanda as chanda
+# import app.dictionary as dictionary
 
 
 def extract_chanda_rule(lines):
@@ -42,16 +43,22 @@ def analysis(text, rule='auto-detect'):
     if rule == 'auto-detect' or not rule:
         rule = extract_chanda_rule(lines)
     chanda_obj = chanda.Chanda(rule)
+    # all_words = dictionary.just_words()
 
     for line in lines:
         line.match(chanda_obj)
+        # Check spelling not applied as it can't check combined words
+        # like eko eka eki ones. 
+        # if line.check == chanda.LineType.UNCHECKED:
+        #     continue
+        # line.check_spelling(all_words)
     correct = sum(map(lambda l: l.check == chanda.LineType.CORRECT, lines))
     wrong = sum(map(lambda l: l.check == chanda.LineType.WRONG, lines))
     ignored = sum(map(lambda l: l.check == chanda.LineType.UNCHECKED, lines))
     if wrong == 0:
         err_messages = 'सबै लाईन हरु सहि छन्।'
     else:
-        err_messages = '<br />'.join((f'line-{i+1}: {l.comment}'
+        err_messages = '<br />'.join((f'line-{i+1}: {";".join(l.comments)}'
                                       for i, l in enumerate(lines)
                                       if l.check == chanda.LineType.WRONG))
 
