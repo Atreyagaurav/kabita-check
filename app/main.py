@@ -25,7 +25,7 @@ def browse_words():
     rule = request.args.get('rule', '')
     word = request.args.get('word', '')
     if rule or word:
-        matches = dictionary.wordlist(rule.upper(), word.strip())
+        matches = dictionary.wordlist(chanda.get_si_string(rule), word.strip())
     else:
         matches = []
     return flask.render_template('browse_words.html',
