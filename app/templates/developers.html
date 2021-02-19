@@ -4,18 +4,23 @@ Developers
 {% endblock %}
 
 {% block body %}
-<div>
+<div class="uk-padding">
     <h3>Informations for Programmers/Developers</h3>
-    The API is available in /api endpoint, right now there are only two endpoints, I'll add more as I develop them.
+    The API is available in /api endpoint, right now these are the only endpoints available, I'll add more as I develop them.
     <ul class="uk-list uk-list-large">
-	<li>The API for checking chanda is available in /api/check endpoint, just send a JSON with {"text":"your kabita"}, it'll return the analysis result as well as rendered HTML with mistakes highlighted in Red.</li>
-	<li>The API for chanda list is available in /api/all_chanda endpoint.</li>
+	<li>The API for checking chanda is available in <strong>/api/check</strong> endpoint.<br />
+	    POST request; JSON: {"text":"your kabita","rule":"rule in is"}, it'll return the analysis result as well as rendered HTML with mistakes highlighted in Red. You can leave the rule empty for autodetection of chanda rule.</li>
+	<li>The API for chanda list is available in <strong>/api/all_chanda</strong> endpoint.<br />
+	GET Request.</li>
+	<li>The API for wordlist is available in <strong>/api/wordlist</strong>.<br />
+	GET Request; JSON: {"rule":"rule for word", "word":"word to search"}, the rule and word follow same syntax as that of query parameters on browse words page.</li>
     </ul>
 
     <h4> Other details: </h4>
     <ul class="uk-list">
-	<li>Save file and load file features are currently under development. I'm not great with javascript so the development is super slow.</li>
-	<li>I'd also like to integrate a nepali dictionary to check the correctness of words as well as chanda, and maybe suggest solutions for errors.</li>
+	<li>Save file and load file features are currently on hold. I'm not great with javascript so the development is super slow.</li>
+	<li>I'd also like to integrate a nepali dictionary to check the correctness of words as well as chanda, and maybe suggest solutions for errors.
+	But I ran into some problems on that, I have a simple dictionary, as you can see on the browse words page, but it can't check for errors due to -एको -एका -एकी problem and such.</li>
     </ul>
 </div>
 {% endblock %}

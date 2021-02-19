@@ -77,7 +77,7 @@ def api_check():
 @app.route('/api/wordlist', methods=['GET'])
 def get_wordlist():
     data = flask.request.json
-    words = dictionary.wordlist(rule=data['rule'], meaning=data.get('meaning'))
+    words = dictionary.wordlist(rule=data['rule'], word=data.get('word'))
     return flask.jsonify(words)
 
 
