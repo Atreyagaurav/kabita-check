@@ -9,12 +9,24 @@ def wordlist(rule=None, start=None):
         headers = next(reader)
         matches = reader
         if rule:
-            matches = filter(lambda row: row[-1] == rule, matches)
-        if start:
-            if start[0] == '-':
-                matches = filter(lambda row: row[0].endswith(start[1:]), matches)
+            print(f"Rule={rule}")
+            if rule[0] == '-':
+                def filter_fun(row): return row[-1].endswith(rule[1:])
+            elif rule[-1] == '-':
+                def filter_fun(row): return row[-1].startswith(rule[:-1])
             else:
-                matches = filter(lambda row: row[0].startswith(start), matches)
+                def filter_fun(row): return row[-1] == rule
+            matches = filter(filter_fun, matches)
+
+        if start:
+            print(f"Start={start}")
+            if start[0] == '-':
+                def filter_fun(row): return row[0].endswith(start[1:])
+            elif start[-1] == '-':
+                def filter_fun(row): return row[0].startswith(start[:-1])
+            else:
+                def filter_fun(row): return row[0] == start
+            matches = filter(filter_fun, matches)
 
         def get_dict(row):
             value = {k: v for k, v in zip(headers, row)}

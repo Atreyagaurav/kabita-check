@@ -28,7 +28,7 @@ Words List
     <div class="uk-padding">
 	<dl class="uk-description-list uk-description-list-divider">
 	    {% for entry in wordlist %}
-	    <dt>{{entry.word}} ({{entry.category}})</dt>
+	    <dt>{{entry.word}} ({{entry.category}}) [{{entry.is}}]</dt>
 	    <dd>{% for meaning in entry.meanings %}
 		{{loop.index}}. {{meaning}}<br />
 		{% endfor %}
@@ -44,6 +44,26 @@ Words List
 	    <li>To search a word starting from/matching word, enter the characters in the second textbox.</li>
 	    <li>You can also search for the words which ends with the given characters, add '-' (hyphen) at the start of the second box.</li>
 	    <li>You can combine both boxes to find results suitable to you, if you want to only apply one, then clear the another.</li>
+	</ul>
+	<h4>उदाहरण:</h4>
+	पहिलो र दोस्रो Box मा के भर्दा के हुन्छ तल हेर्नुहोस्। <span class="uk-label">-</span> = खालि Box। 
+	<ul class="uk-list uk-list-square">
+	    <li><span class="uk-label">i-</span> <span class="uk-label">-खा</span>:
+		'लगु' बाट सुरुहुने, 'खा' मा अन्त्य हुने सब्दहरु।</li>
+	    <li><span class="uk-label">s-</span> <span class="uk-label">-खा</span>:
+		'गुरु' बाट सुरुहुने, 'खा' मा अन्त्य हुने सब्दहरु।</li>
+	    <li><span class="uk-label">-i</span> <span class="uk-label">खा-</span>:
+		'लगु' मा अन्त्य, 'खा' बाट सुरुहुने हुने सब्दहरु।</li>
+	    <li><span class="uk-label">is-</span> <span class="uk-label">-</span>:
+		'लगु गुरु' बाट सुरुहुने सबै सब्दहरु।</li>
+	    <li><span class="uk-label">-</span> <span class="uk-label">का-</span>:
+		'का' बाट सुरुहुने सबै सब्दहरु।</li>
+	    <li><span class="uk-label">-</span> <span class="uk-label">खाना</span>:
+		'खाना' सब्दहरु।</li>
+	    <li><span class="uk-label">sss</span> <span class="uk-label">-</span>:
+		'म' गण का सब्दहरु।</li>
+	    <li><span class="uk-label">sss-</span> <span class="uk-label">-</span>:
+		'म' गण बाट सुरुहुने सबै सब्दहरु।</li>
 	</ul>
     </div>
     <h3>Dictionary Source</h3>

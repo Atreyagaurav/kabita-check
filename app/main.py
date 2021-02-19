@@ -24,8 +24,9 @@ def home():
 def browse_words():
     rule = request.args.get('rule', '')
     word = request.args.get('word', '')
+    rule = "".join((c for c in rule.upper() if c in '-IS'))
     if rule or word:
-        matches = dictionary.wordlist(chanda.get_si_string(rule), word.strip())
+        matches = dictionary.wordlist(rule, word.strip())
     else:
         matches = []
     return flask.render_template('browse_words.html',
