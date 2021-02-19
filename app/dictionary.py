@@ -10,7 +10,6 @@ def wordlist(rule=None, word=None):
         matches = reader
         if rule:
             rule = rule.upper()
-            print(f"Rule={rule}")
             if rule[0] == '-':
                 def filter_fun(row): return row[-1].endswith(rule[1:])
             elif rule[-1] == '-':
@@ -20,7 +19,6 @@ def wordlist(rule=None, word=None):
             matches = filter(filter_fun, matches)
 
         if word:
-            print(f"Start={word}")
             if word[0] == '-':
                 def filter_fun(row): return row[0].endswith(word[1:])
             elif word[-1] == '-':

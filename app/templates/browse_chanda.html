@@ -35,9 +35,9 @@
 	<ul class="js-filter uk-child-width-1-3@s uk-child-width-1-4@m uk-grid-small uk-grid-match" uk-grid="masonry: true">
 	    {% for chanda in all_chandas %}
 	    <li class="index-{{chanda.name[0]}} index2-{{chanda.length}}">
-		<div class="uk-card uk-card-large">
+		<div class="uk-card uk-card-large uk-card-hover chanda-card">
 		    <!-- <h4 class="uk-card-title">{{name}}</h4> -->
-		    <div class="chanda-card">
+		    <div>
 			<span class="uk-label alignleft">{{chanda.length}}</span>
 			<b class="aligncenter">{{chanda.name}}</b>:
 			<span class="alignright">{{chanda.gans}}</span><br />

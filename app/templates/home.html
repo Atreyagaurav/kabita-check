@@ -4,29 +4,36 @@ Welcome
 {% endblock %}
 
 {% block body %}
-	<h2 class="uk-heading-small" style="text-align: center;">स्वागतम् | Welcome</h2>
-	<div style="text-align: center;">यो website छन्द कविता जाँच गर्ने उद्देश्यका साथ बनाइएको हो। unicode मा लेखिएको कवितामा भएका मात्राहरु हेरेर ह्रश्व र दीर्घ बुझ्दछ; अनि सबै लाईन एक अर्का संग तुलना गरिन्छ।</div>
+<div class="uk-padding">
+    <h2 class="uk-heading-small" style="text-align: center;">स्वागतम् | Welcome</h2>
+    <div style="text-align: center;">यो website छन्द कविता जाँच गर्ने उद्देश्यका साथ बनाइएको हो। unicode मा लेखिएको कवितामा भएका मात्राहरु हेरेर ह्रश्व र दीर्घ बुझ्दछ; अनि सबै लाईन एक अर्का संग तुलना गरिन्छ।</div>
 
-	<div class="uk-child-width-1-3@l uk-grid-small uk-grid-match uk-margin-small-left" uk-grid>
-	    <div class="uk-card uk-card-mute uk-card-body">
-		    <h3 class="uk-card-title">अब कहा जाने</h3>
-		    <p>कविताको छन्द जाँच गर्नको लागि बनाइएको app <a href="/kabita_interactive">/kabita_interactive</a> मा गएर चलाउन सक्नुहुनेछ।</p>
-		    <p>कविता जाँच गर्ने र उदाहरण हेर्ने काम त्यहा गर्न सकिन्छ।</p>
-		    <p>The testing web-app is in <a href="/kabita_interactive">/kabita_interactive</a> endpoint.</p>
-		    <p>You can test your kabita as well as look at example kabita format there</p>
-		</div>
-		<div class="uk-card uk-card-mute uk-card-body">
-		    <h3 class="uk-card-title">कविता कसरी जाँच गर्ने</h3>
-		    <p>आफ्नो कविता unicode मा InputBox मा टाईप गर्न सक्नुहुनेछ; या आफ्नो फाईल बाट paste गर्न सक्नुहुनेछ। कविता तयार गरेपछि "Check" button थिच्नुहोस्।
-		    <p>कविताको छन्द "I" र "S" ले छोटो र लामो स्वरलाई जनाउने गरी '#' पछि लेखिएको छ भने आफै जाँच गर्न सक्छ। उदाहरण <a href="/kabita_interactive">/kabita_interactive</a> को "Example" Button थिचेपछि देख्न सक्नुहुन्छ।</p>
-		    <p>To know how to check your kabita press the "Example" button and then look at the Example.
-		</div>
-		<div class="uk-card uk-card-mute uk-card-body">
-		    <h3 class="uk-card-title">गल्ती कसरी हेर्ने</h3>
-		    <p>गलत शब्दहरु रातोमा देखाएको हुन्छ र त्यसमाथि mouse लैजाँदा के गलत छभनि देख्न सकिन्छ।</p>
-		    <p>कति गल्ती भेटिए भनेर Analysis Results मा देखाउछ। रातोमा कुल गल्ती र हरियोमा कुल सहि देखाउछ।</p>
-		    <p>The mistakes are highlighted and explained in tooltip which you can see when you hover over them.</p>
-		    <p>Analysis result shows the overall analysis of the Kabita, red shows errors while green shows count of correct lines.</p>
-		</div>
+    <div class="uk-child-width-1-2@l uk-grid uk-margin" uk-grid>
+	<div class="uk-card uk-card-body uk-padding">
+	    <h3 class="uk-card-title">अब कहा जाने</h3>
+	    <div class="uk-padding-small">
+		<p>कविताको छन्द जाँच गर्नको लागि बनाइएको app <a href="/kabita_interactive">Interactive App</a> मा गएर चलाउन सक्नुहुनेछ।</p>
+		<p>कविताको छन्द शुचि हेर्नको लागि <a href="/browse_chanda">Chanda List</a> मा जानुहोस्।</p>
+		<p>शब्दकोषको शब्दहरु खोज गर्नको लागि <a href="/browse_words">Words List</a> मा जानुहोस्।</p>
+		<p>मेरो बारेमा जान्नको लागि <a href="/about">About Me</a> मा जानुहोस्।</p>
+		<p>Programmer हरुको लागि API Details हेर्न <a href="/developers">For Developers</a> मा जानुहोस्।</p>
+		<p>मसंग कुरा गर्नको लागि <a href="/contact">Contact</a> मा जानुहोस्।</p>
+	    </div>
 	</div>
+	<div class="uk-card uk-card-body uk-padding">
+	    <h3 class="uk-card-title">कविता कसरी जाँच गर्ने</h3>
+	    <div class="uk-padding-small">
+		<p>कविता जाँच गर्ने र उदाहरण हेर्ने काम त्यहा गर्न सकिन्छ।</p>
+		<p>आफ्नो कविता unicode मा InputBox मा टाईप गर्न सक्नुहुनेछ; या आफ्नो फाईल बाट paste गर्न सक्नुहुनेछ। कविता तयार गरेपछि "Check" button थिच्नुहोस्।</p>
+		<p>गलत शब्दहरु रातोमा देखाएको हुन्छ र त्यसमाथि mouse लैजाँदा के गलत छभनि देख्न सकिन्छ।</p>
+		<p>कति गल्ती भेटिए भनेर Analysis Results मा देखाउछ। रातोमा कुल गल्ती र हरियोमा कुल सहि देखाउछ।</p>
+		<p>कविताको छन्द "I" र "S" ले छोटो र लामो स्वरलाई जनाउने गरी '#' पछि लेखिएको छ भने आफै जाँच गर्न सक्छ। उदाहरण <a href="/kabita_interactive">/kabita_interactive</a> को "Example" Button थिचेपछि देख्न सक्नुहुन्छ।</p>
+		<p>You can test your kabita as well as look at example kabita format there</p>
+		<p>The mistakes are highlighted and explained in tooltip which you can see when you hover over them.</p>
+		<p>Analysis result shows the overall analysis of the Kabita, red shows errors while green shows count of correct lines.</p>
+		<p>To know how to check your kabita press the "Example" button and then look at the Example.</p>
+	    </div>
+	</div>
+    </div>
+</div>
 {% endblock %}
