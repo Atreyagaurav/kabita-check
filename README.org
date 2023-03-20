@@ -2,6 +2,7 @@
 
 This webapp is hosted on [[https://kabita-check.herokuapp.com/]].
 
+It's mainly for checking chanda kabita, but it also comes with a dictionary.
 
 ** Sample file
 The file can accommodate comments, start the line with '#' to make that line as a comment.
